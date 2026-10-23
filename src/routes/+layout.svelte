@@ -11,7 +11,13 @@
 </svelte:head>
 
 <header class="flex items-center justify-between border-b px-4 py-3">
-	<a href="/" class="font-semibold">biyuya-business</a>
+	<div class="flex items-center gap-4">
+		<a href="/" class="font-semibold">biyuya-business</a>
+		{#if data.session}
+			<a href="/products" class="text-sm underline">Productos</a>
+			<a href="/sales" class="text-sm underline">Ventas</a>
+		{/if}
+	</div>
 	<nav class="flex items-center gap-4 text-sm">
 		{#if data.session}
 			<span class="text-muted-foreground">{data.session.user.email}</span>
