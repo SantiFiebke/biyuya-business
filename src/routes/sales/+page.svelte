@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button } from '#lib/components/ui/button/index.js';
+	import { formatARS } from '#lib/format.js';
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
@@ -14,7 +15,9 @@
 			<span>Producto</span>
 			<select name="product_id" required class="border-input rounded-md border px-3 py-2">
 				{#each data.products as p (p.id)}
-					<option value={p.id}>{p.name} ({p.sku}) — stock {p.stock}</option>
+					<option value={p.id}>
+						{p.name} ({p.sku}) — {formatARS(p.sale_price)} — stock {p.stock}
+					</option>
 				{/each}
 			</select>
 		</label>
@@ -50,7 +53,7 @@
 			{#each data.sales as s (s.id)}
 				<tr class="border-b">
 					<td class="py-2">{new Date(s.created_at).toLocaleString()}</td>
-					<td class="py-2 text-right">{s.total}</td>
+					<td class="py-2 text-right">{formatARS(s.total)}</td>
 				</tr>
 			{:else}
 				<tr><td colspan="2" class="text-muted-foreground py-4">Sin ventas todavía.</td></tr>

@@ -16,6 +16,7 @@
 		{#if data.session}
 			<a href="/products" class="text-sm underline">Productos</a>
 			<a href="/sales" class="text-sm underline">Ventas</a>
+			<a href="/reports" class="text-sm underline">Reportes</a>
 		{/if}
 	</div>
 	<nav class="flex items-center gap-4 text-sm">
