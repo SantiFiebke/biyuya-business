@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import type { PageProps } from './$types';
 
 	let { form }: PageProps = $props();
+	let submitting = $state(false);
 </script>
 
 <div class="mx-auto max-w-sm p-6">
@@ -19,15 +21,28 @@
 			>.
 		</p>
 	{:else}
-		<form method="POST" class="flex flex-col gap-3">
+		<form
+			method="POST"
+			class="flex flex-col gap-3"
+			use:enhance={() => {
+				submitting = true;
+				return async ({ update }) => {
+					await update();
+					submitting = false;
+				};
+			}}
+		>
 			<input
 				name="email"
 				type="email"
 				required
+				disabled={submitting}
 				placeholder="[EMAIL]"
 				class="border-input rounded-md border px-3 py-2"
 			/>
-			<Button type="submit">Enviar enlace</Button>
+			<Button type="submit" disabled={submitting}
+				>{submitting ? 'Enviando…' : 'Enviar enlace'}</Button
+			>
 			{#if form?.message}
 				<p class="text-destructive text-sm">{form.message}</p>
 			{/if}
